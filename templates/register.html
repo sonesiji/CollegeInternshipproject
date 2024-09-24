@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Student Registration</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #c3d7f3;
+        transition: background-color 0.5s ease-in-out;
+      }
+
+      .container {
+        width: 60%;
+        margin: 0 auto;
+        padding: 20px;
+        transform: translateY(50px);
+        animation: fadeIn 1s ease-in-out forwards;
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h2 {
+        color: #333;
+        animation: colorChange 3s infinite alternate;
+      }
+
+      @keyframes colorChange {
+        0% {
+          color: #333;
+        }
+        100% {
+          color: #024c93;
+        }
+      }
+
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 4px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        margin-bottom: 5px;
+        font-size: 1rem;
+        font-weight: bold;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group input[type="date"] {
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        transition: border 0.3s ease-in-out;
+        width: 100%;
+      }
+
+      .form-group input:focus {
+        border-color: #024c93;
+      }
+
+      input[type="submit"] {
+        background-color: #024c93;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 160px;
+        transition: background-color 0.3s ease-in-out, transform 0.2s;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+      }
+
+      input[type="submit"]:active {
+        transform: scale(1);
+      }
+
+      .error {
+        color: red;
+        margin-top: 5px;
+        font-size: 0.875rem;
+      }
+
+      .form-group select,
+      .form-group input[type="date"] {
+        width: 200px;
+      }
+
+      .checkbox-label {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .checkbox-label input {
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Student Registration</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %} {% for field in form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }} {% if field.errors %}
+          <div class="error">{{ field.errors.as_text }}</div>
+          {% endif %}
+        </div>
+        {% endfor %} {% if form.non_field_errors %}
+        <div class="error">{{ form.non_field_errors }}</div>
+        {% endif %}
+        <div class="checkbox-label">
+          <input type="checkbox" onclick="showPassword()" /> Show Password
+        </div>
+        <div style="margin-left: 40%;">
+          <input type="submit" onclick="showSuccessMessage()" value="Register" />
+        </div>
+      </form>
+
+      <script>
+        function showPassword() {
+          var passwordField = document.getElementById("id_password");
+          var confirmPasswordField = document.getElementById("id_confirm_password");
+          if (passwordField.type === "password") {
+            passwordField.type = "text";
+            confirmPasswordField.type = "text";
+          } else {
+            passwordField.type = "password";
+            confirmPasswordField.type = "password";
+          }
+        }
+      </script>
+    </div>
+  </body>
+</html>
+{% endblock %}

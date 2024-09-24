@@ -1,0 +1,225 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            background-color: #fafafa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+        }
+        h3 {
+            text-align: center;
+            color: #555;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        input[type="date"] {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 5px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Visualization</h1>
+
+        <!-- Date Filter Form -->
+        <form method="GET" action="{% url 'visualization' %}">
+            <label for="date">Select Date:</label>
+            <input type="date" id="date" name="date" value="{{ date }}">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+
+        <!-- Visualization Cards in a Row -->
+        <div class="row">
+            <!-- Attendance Chart -->
+            <div class="col-md-6">
+                <div class="card">
+                    <h3>Student Attendance Summary {% if date %}for {{ date }}{% endif %}</h3>
+                    <canvas id="attendanceChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Gender Distribution Chart -->
+            <div class="col-md-6">
+                <div class="card">
+                    <h3>Gender Distribution</h3>
+                    <canvas id="genderChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Course Enrollment Chart -->
+            <div class="col-md-6">
+                <div class="card">
+                    <h3>Course Enrollment</h3>
+                    <canvas id="courseChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set the maximum date for the date input to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').setAttribute('max', today);
+
+        // Attendance Chart
+        const attendanceCtx = document.getElementById('attendanceChart').getContext('2d');
+        const attendanceLabels = [{% for student, total_present, total_absent, percentage in student_attendance %}'{{ student.name }}',{% endfor %}];
+        const attendanceData = {
+            labels: attendanceLabels,
+            datasets: [{
+                label: 'Total Presents',
+                data: [{% for student, total_present, total_absent, percentage in student_attendance %}{{ total_present }},{% endfor %}],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }, {
+                label: 'Total Absents',
+                data: [{% for student, total_present, total_absent, percentage in student_attendance %}{{ total_absent }},{% endfor %}],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        };
+        const attendanceConfig = {
+            type: 'bar',
+            data: attendanceData,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+        new Chart(attendanceCtx, attendanceConfig);
+
+        // Gender Distribution Chart
+        const genderCtx = document.getElementById('genderChart').getContext('2d');
+        const genderLabels = [{% for gender, count in gender_distribution.items %}'{{ gender }}',{% endfor %}];
+        const genderData = {
+            labels: genderLabels,
+            datasets: [{
+                label: 'Gender Distribution',
+                data: [{% for gender, count in gender_distribution.items %}{{ count }},{% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+        const genderConfig = {
+            type: 'pie',
+            data: genderData,
+            options: {
+                responsive: true
+            }
+        };
+        new Chart(genderCtx, genderConfig);
+
+        // Course Enrollment Chart
+        const courseCtx = document.getElementById('courseChart').getContext('2d');
+        const courseLabels = [{% for course, count in course_distribution.items %}'{{ course }}',{% endfor %}];
+        const courseData = {
+            labels: courseLabels,
+            datasets: [{
+                label: 'Course Enrollment',
+                data: [{% for course, count in course_distribution.items %}{{ count }},{% endfor %}],
+                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                borderColor: 'rgba(153, 102, 255, 1)',
+                borderWidth: 1
+            }]
+        };
+        const courseConfig = {
+            type: 'bar',
+            data: courseData,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+        new Chart(courseCtx, courseConfig);
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Event Visualization</title>
+    
+    <!-- Include Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Include the necessary libraries -->
+    <link href="https://unpkg.com/vis-timeline@latest/dist/vis-timeline-graph2d.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/vis-timeline@latest/dist/vis-timeline-graph2d.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.css">
+    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt/dist/frappe-gantt.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h2 {
+            color: #343a40;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            animation: fadeIn 1.5s;
+        }
+
+        #student-timeline, #gantt-chart {
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            background-color: #ffffff;
+            padding: 10px;
+            animation: fadeInUp 1.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Behavioral Timeline -->
+        <h2>Behavioral Timeline</h2>
+        <div id="student-timeline"></div>
+
+        <!-- Event Analysis (Gantt Chart) -->
+        <h2>Event Analysis</h2>
+        <div id="gantt-chart"></div>
+    </div>
+
+    <script>
+        // Behavioral Timeline Data (Replace with dynamic data from Django)
+        const timelineData = {{ timeline_data|safe }};
+
+        // Create a Behavioral Timeline
+        const container = document.getElementById('student-timeline');
+        const items = new vis.DataSet(timelineData);
+        const options = {
+            width: '100%',
+            height: '300px',
+            margin: {
+                item: 10
+            }
+        };
+        const timeline = new vis.Timeline(container, items, options);
+
+        // Event Analysis (Gantt Chart) Data (Replace with dynamic data from Django)
+        const tasks = {{ tasks|safe }};
+
+        // Create a Gantt Chart
+        const gantt = new Gantt("#gantt-chart", tasks, {
+            view_mode: 'Day',
+            date_format: 'YYYY-MM-DD',
+            custom_popup_html: function(task) {
+                return `<b>${task.name}</b><br>From: ${task.start}<br>To: ${task.end}`;
+            }
+        });
+    </script>
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

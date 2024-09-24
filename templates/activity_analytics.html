@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Activity Analytics</title>
+</head>
+<body>
+    <h1>Activity Analytics</h1>
+    <p>Total Logins: {{ total_logins }}</p>
+    <p>Total Time Logged In: {{ total_time_logged_in }}</p>
+    <p>Average Session Duration: {{ average_session_duration }}</p>
+    <p>Last Login: {{ last_login }}</p>
+    
+    <h2>Activity Details</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Login Time</th>
+                <th>Logout Time</th>
+                <th>Session Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for activity in activities %}
+            <tr>
+                <td>{{ activity.name.username }}</td>
+                <td>{{ activity.login_time }}</td>
+                <td>{{ activity.logout_time }}</td>
+                <td>
+                    {% if activity.logout_time %}
+                        {{ activity.logout_time|date:"H:i:s" }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="?action=download">Download CSV Report</a>
+</body>
+</html>
