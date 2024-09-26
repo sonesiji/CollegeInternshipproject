@@ -1,7 +1,7 @@
 from django.urls import path, include
 from . import views
 from django.contrib import admin
-from .views import chat_interaction_trends, generate_text
+from .views import  generate_text
 from .views import event_visualization
 from .views import activity_report
 from .views import internship_suggestion_view
