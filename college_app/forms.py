@@ -40,3 +40,12 @@ class InternshipForm(forms.Form):
     experience = forms.IntegerField(label='Years of Experience')
     duration = forms.IntegerField(label='Duration of Internship (in months)')
     stipend = forms.ChoiceField(choices=[('Yes', 'Yes'), ('No', 'No')], label='With Stipend')
+
+
+
+from django import forms
+
+class ForgotPasswordForm(forms.Form):
+    username = forms.CharField(max_length=150, label="Username or Email")
+    new_password = forms.CharField(widget=forms.PasswordInput(), label="New Password")
+
