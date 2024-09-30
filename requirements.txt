@@ -10,3 +10,4 @@ google-generativeai
 matplotlib
 reportlab
 gunicorn
+xhtml2pdf==0.2.16
