@@ -3,197 +3,221 @@
 
 {% block content %}
     <section class="banner">
-      <img src="{% static "images/kristhu123.jpg" %}" alt="College Banner" />
+        <img src="{% static "images/kristhu123.jpg" %}" alt="College Banner" />
     </section>
 
     <section class="chatbot-icon" id="chatbot-icon">
-      <a href="{% url 'generate_text' %}" target="_blank" class="chatbot-button btn btn-primary">
-        <img src="{% static 'images/Floating Robot.jpg' %}" alt="Chatbot Icon" style="width: 50px; height: auto;" />
-      </a>
+        <a href="#" class="chatbot-button btn btn-primary">
+            <img src="{% static 'images/Floating Robot.jpg' %}" alt="Chatbot Icon" style="width: 50px; height: auto;" />
+        </a>
     </section>
 
     <!-- Audio element for the intro song -->
     <audio id="intro-audio" src="{% static 'audio/intro-song.mp3' %}" preload="auto"></audio>
-    
+
     <section class="welcome">
-      <div class="welcome-img">
-        <img src="{% static "images/new1.jpg" %}" alt="College Wel Pic" />
-      </div>
-      <div class="welcome-text">
-        <h2>Welcome to <span>Christ University</span> Bangalore</h2>
-        <p>
-          Christ University, Bangalore, is a premier educational institution that
-          blends academic excellence with a vibrant campus life. Located in the
-          heart of the city, the university is renowned for its lush green campus
-          and state-of-the-art facilities, providing an ideal environment for
-          holistic education.
-        </p>
-        <div class="welcome-text-h3"><h3>Our Vision</h3></div>
-        <p>
-          To nurture the overall development of students by imparting value-based,
-          high-quality education. Christ University aims to create morally upright,
-          intellectually competent, and socially responsible individuals who
-          contribute positively to society and the nation.
-        </p>
-      </div>
+        <div class="welcome-img">
+            <img src="{% static "images/new1.jpg" %}" alt="College Wel Pic" />
+        </div>
+        <div class="welcome-text">
+            <h2>Welcome to <span>Christ University</span> Bangalore</h2>
+            <p>
+                Christ University, Bangalore, is a premier educational institution that blends academic excellence
+                with a vibrant campus life. Located in the heart of the city, the university is renowned for its lush
+                green campus and state-of-the-art facilities, providing an ideal environment for holistic education.
+            </p>
+            <div class="welcome-text-h3">
+                <h3>Our Vision</h3>
+            </div>
+            <p>
+                To nurture the overall development of students by imparting value-based, high-quality education. Christ
+                University aims to create morally upright, intellectually competent, and socially responsible individuals
+                who contribute positively to society and the nation.
+            </p>
+        </div>
     </section>
 
     <div class="p-bg">
-      <section class="news">
-        <h2>Latest News & Announcements</h2>
-        <div class="row">
-          <!-- First image -->
-          <div class="col-md-4 col-sm-6">
-            <img src="{% static 'images/IGNUS_20231010033442.jpg' %}" 
-                 alt="News Image" class="img-fluid news-img" data-toggle="modal" data-target="#imageModal1" />
-          </div>
-          <!-- Second image -->
-          <div class="col-md-4 col-sm-6">
-            <img src="{% static 'images/21 FEB E_20230217071511.jpg' %}" 
-                 alt="News Image" class="img-fluid news-img" data-toggle="modal" data-target="#imageModal2" />
-          </div>
-          <!-- Third image -->
-          <div class="col-md-4 col-sm-6">
-            <img src="{% static 'images/SNU X CU (2)_20240817055714.jpg' %}" 
-                 alt="News Image" class="img-fluid news-img" data-toggle="modal" data-target="#imageModal3" />
-          </div>
-        </div>
-        <div class="row">
-          <!-- Fourth image -->
-          <div class="col-md-4 col-sm-6">
-            <img src="{% static 'images/4, 5 AprilBMUN POSTER_20240307053634.jpg' %}" 
-                 alt="News Image" class="img-fluid news-img" data-toggle="modal" data-target="#imageModal4" />
-          </div>
-          <!-- Fifth image -->
-          <div class="col-md-4 col-sm-6">
-            <img src="{% static 'images/poster.jpg' %}" 
-                 alt="News Image" class="img-fluid news-img" data-toggle="modal" data-target="#imageModal5" />
-          </div>
-          <!-- Sixth image -->
-          <div class="col-md-4 col-sm-6">
-            <img src="{% static 'images/Thumbad Poster_20240803120150.jpg' %}" 
-                 alt="News Image" class="img-fluid news-img" data-toggle="modal" data-target="#imageModal6" />
-          </div>
-        </div>
-      </section>
+        <section class="news">
+            <h2>Latest News & Announcements</h2>
+            <div class="row">
+                <!-- First image -->
+                <div class="col-md-4 col-sm-6">
+                    <img src="{% static 'images/IGNUS_20231010033442.jpg' %}" alt="News Image" class="img-fluid news-img"
+                         data-toggle="modal" data-target="#imageModal1" />
+                </div>
+                <!-- Second image -->
+                <div class="col-md-4 col-sm-6">
+                    <img src="{% static 'images/21 FEB E_20230217071511.jpg' %}" alt="News Image" class="img-fluid news-img"
+                         data-toggle="modal" data-target="#imageModal2" />
+                </div>
+                <!-- Third image -->
+                <div class="col-md-4 col-sm-6">
+                    <img src="{% static 'images/SNU X CU (2)_20240817055714.jpg' %}" alt="News Image" class="img-fluid news-img"
+                         data-toggle="modal" data-target="#imageModal3" />
+                </div>
+            </div>
+            <div class="row">
+                <!-- Fourth image -->
+                <div class="col-md-4 col-sm-6">
+                    <img src="{% static 'images/4, 5 AprilBMUN POSTER_20240307053634.jpg' %}" alt="News Image"
+                         class="img-fluid news-img" data-toggle="modal" data-target="#imageModal4" />
+                </div>
+                <!-- Fifth image -->
+                <div class="col-md-4 col-sm-6">
+                    <img src="{% static 'images/poster.jpg' %}" alt="News Image" class="img-fluid news-img"
+                         data-toggle="modal" data-target="#imageModal5" />
+                </div>
+                <!-- Sixth image -->
+                <div class="col-md-4 col-sm-6">
+                    <img src="{% static 'images/Thumbad Poster_20240803120150.jpg' %}" alt="News Image" class="img-fluid news-img"
+                         data-toggle="modal" data-target="#imageModal6" />
+                </div>
+            </div>
+        </section>
     </div>
 
     <!-- Modals for each image -->
-    <!-- Modal 1 -->
-    <div class="modal fade" id="imageModal1" tabindex="-1" role="dialog" aria-labelledby="imageModal1Label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <img src="{% static 'images/IGNUS_20231010033442.jpg' %}" alt="Full Image 1" class="img-fluid" />
-          </div>
+    <div class="modal fade" id="imageModal1" tabindex="-1" role="dialog" aria-labelledby="imageModal1Label"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="{% static 'images/IGNUS_20231010033442.jpg' %}" alt="Full Image 1" class="img-fluid" />
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    <!-- Modal 2 -->
-    <div class="modal fade" id="imageModal2" tabindex="-1" role="dialog" aria-labelledby="imageModal2Label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <img src="{% static 'images/21 FEB E_20230217071511.jpg' %}" alt="Full Image 2" class="img-fluid" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal 3 -->
-    <div class="modal fade" id="imageModal3" tabindex="-1" role="dialog" aria-labelledby="imageModal3Label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <img src="{% static 'images/SNU X CU (2)_20240817055714.jpg' %}" alt="Full Image 3" class="img-fluid" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal 4 -->
-    <div class="modal fade" id="imageModal4" tabindex="-1" role="dialog" aria-labelledby="imageModal4Label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <img src="{% static 'images/4, 5 AprilBMUN POSTER_20240307053634.jpg' %}" alt="Full Image 4" class="img-fluid" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal 5 -->
-    <div class="modal fade" id="imageModal5" tabindex="-1" role="dialog" aria-labelledby="imageModal5Label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <img src="{% static 'images/poster.jpg' %}" alt="Full Image 5" class="img-fluid" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal 6 -->
-    <div class="modal fade" id="imageModal6" tabindex="-1" role="dialog" aria-labelledby="imageModal6Label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <img src="{% static 'images/Thumbad Poster_20240803120150.jpg' %}" alt="Full Image 6" class="img-fluid" />
-          </div>
-        </div>
-      </div>
-    </div>
+
+    <!-- More modals here... -->
 
     <!-- Load Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS for Draggable Chatbot Icon -->
     <style>
-      .chatbot-icon {
-        position: absolute;
-        cursor: move;
-        top: 20px;
-        left: 20px;
-        z-index: 1000;
-      }
+        .chatbot-icon {
+    position: fixed; /* Ensures the chatbot stays fixed on the screen */
+    bottom: 20px; /* Position it near the bottom */
+    left: 20px; /* Align it to the left side */
+    cursor: move;
+    z-index: 1000; /* Keep it on top of other elements */
+}
 
-      .chatbot-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #007bff;
-        border-radius: 50%;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        padding: 10px;
-        border: 2px solid #0056b3;
-        text-decoration: none;
-      }
+        .chatbot-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #007bff;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 10px;
+            border: 2px solid #0056b3;
+            text-decoration: none;
+        }
+        .chatbot-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 10px;
+    border: 2px solid #0056b3;
+    text-decoration: none;
+    cursor: pointer;
 
-      .chatbot-button img {
-        width: 60px;
-        height: auto;
-        border-radius: 50%;
-      }
+    /* Start position */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
 
-      .chatbot-button:hover {
-        transform: scale(1.1);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-      }
+        .chatbot-button img {
+            width: 60px;
+            height: auto;
+            border-radius: 50%;
+        }
 
-      /* Add spacing between news images */
-      .news-img {
-        width: 100%; 
-        height: 300px; 
-        object-fit: cover; 
-        border-radius: 5px; 
-        margin-bottom: 20px;
-      }
+        /* .chatbot-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        } */
+        .chatbot-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
 
-      /* Background color for the section */
-      .p-bg {
-        background-color: #f0f0f0;
-        padding: 20px;
-      }
+        /* Add spacing between news images */
+        .news-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Background color for the section */
+        .p-bg {
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
     </style>
 
     <!-- Bootstrap JavaScript (required for modals) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript for Draggable Chatbot Icon -->
+    <script>
+        function dragElement(element) {
+            var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            var isDragging = false; // Flag to detect if element is dragged
+
+            if (document.getElementById(element.id + "header")) {
+                document.getElementById(element.id + "header").onmousedown = dragMouseDown;
+            } else {
+                element.onmousedown = dragMouseDown;
+            }
+
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                isDragging = false; // Reset flag on mousedown
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                isDragging = true; // Set flag to true when moving
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                element.style.top = (element.offsetTop - pos2) + "px";
+                element.style.left = (element.offsetLeft - pos1) + "px";
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+
+            // Add click listener to open chatbot only if the icon wasn't dragged
+            element.addEventListener('click', function(e) {
+                if (!isDragging) {
+                    window.open("{% url 'generate_text' %}", '_blank');
+                }
+            });
+        }
+
+        // Make the chatbot icon draggable
+        dragElement(document.getElementById("chatbot-icon"));
+    </script>
 {% endblock %}

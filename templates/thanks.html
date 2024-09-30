@@ -5,73 +5,84 @@
   <title>Thanks for Registering</title>
   <style>
     body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f0f0f0;
-}
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(45deg, #ff6b6b, #f7e86b, #6bff6b, #6b6bff);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
 
-.container {
-  text-align: center;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
+    .container {
+      text-align: center;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
 
-h2 {
-  color: #4b3ac8;
-  font-size: 2em;
-  margin-bottom: 10px;
-}
+    h2 {
+      color: #4b3ac8;
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
 
-p {
-  color: #666;
-  font-size: 1.2em;
-  margin-bottom: 20px;
-}
+    p {
+      color: #666;
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
 
-.animated-image {
-  width: 200px;
-  height: auto;
-  animation: fadeIn 2s ease-in-out;
-}
+    .animated-image {
+      width: 200px;
+      height: auto;
+      animation: fadeIn 2s ease-in-out;
+    }
 
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-/* Add a style for the go home button */
-.go-home {
-  display: inline-block;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  background-color: #5d4ddb;
-  color: #fff;
-  font-size: 1em;
-  cursor: pointer;
-  margin-top: 10px;
-}
+    /* Add a style for the go home button */
+    .go-home {
+      display: inline-block;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      background-color: #405de6; /* Instagram button color */
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
 
+    .go-home:hover {
+      background-color: #5851db; /* Darker shade for hover effect */
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>Thanks for registering!</h2>
     <p>You will receive your credentials once the registration is approved.</p>
-    <img src="{% static "images/logo-wide.png" %}" alt="Registration" class="animated-image">
+    <img src="{% static "images/christ-logo.jpeg" %}" alt="Registration" class="animated-image">
     <br>
     <!-- Add a go home button that redirects to the home page -->
     <button class="go-home" onclick="window.location.href='/'">Go Home</button>

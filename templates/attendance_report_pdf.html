@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Report</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; padding: 20px; margin: 0;">
+
+    <div style="max-width: 900px; margin: auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
+        <h1 style="text-align: center; color: #333; margin-bottom: 20px;">Attendance Report</h1>
+        <p style="font-size: 16px; color: #555; text-align: center;">From: <strong>{{ start_date }}</strong> To: <strong>{{ end_date }}</strong></p>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr style="background-color: #007BFF; color: white;">
+                    <th style="padding: 12px 15px; border: 1px solid #ddd; text-align: left;">Student Name</th>
+                    <th style="padding: 12px 15px; border: 1px solid #ddd; text-align: left;">Roll Number</th>
+                    <th style="padding: 12px 15px; border: 1px solid #ddd; text-align: left;">Total Classes</th>
+                    <th style="padding: 12px 15px; border: 1px solid #ddd; text-align: left;">Present</th>
+                    <th style="padding: 12px 15px; border: 1px solid #ddd; text-align: left;">Absent</th>
+                    <th style="padding: 12px 15px; border: 1px solid #ddd; text-align: left;">Attendance %</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in attendance_report %}
+                <tr style="background-color: {% cycle 'white' '#f9f9f9' %};">
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">{{ report.student_name }}</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">{{ report.roll_number }}</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">{{ report.total_classes }}</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">{{ report.present_count }}</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">{{ report.absent_count }}</td>
+                    <td style="padding: 12px 15px; border: 1px solid #ddd;">{{ report.attendance_percentage|floatformat:2 }}%</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

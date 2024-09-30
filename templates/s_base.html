@@ -175,7 +175,7 @@
 <body>
     <!-- Top menu bar -->
     <div class="top-menu">
-      <img src="{% static "images/logo-wide.png" %}" alt="College Logo" class="college-logo">
+      <img src="{% static "images/christ-logo.jpeg" %}" alt="College Logo" class="college-logo">
         <div class="staff-details">
             <div class="staff-info">
                 <p>STAFF DASHBOARD</p>
@@ -192,6 +192,11 @@
       <a href="{% url 'attendance_details' %}">Manage Attendance</a>
       <a href="{% url 'approval' %}">Registration Approval</a>
       <a href="{% url 'visualization' %}">Visualization</a>
+      <a href="{% url 'student_summary_report' %}">Student Summary Report</a>
+      <a href="{% url 'attendance_report' %}">Attendance Report</a>
+
+
+      
 
       <a href="{% url 'index' %}">Logout</a>
       

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Summary Report PDF</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 40px;
+            background-color: #f4f6f9;
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            color: #1a5276;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #1a5276;
+            padding-bottom: 10px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .student-card {
+            background-color: #ffffff;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 6px solid #1a5276;
+            flex: 1 1 calc(33% - 40px); /* Flexbox settings for responsive grid */
+            max-width: 300px;
+            margin-bottom: 30px;
+        }
+        .student-card h2 {
+            color: #1a5276;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+        }
+        .student-details {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: #34495e;
+        }
+        .student-details strong {
+            color: #2c3e50;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .student-card {
+                flex: 1 1 calc(50% - 20px);
+            }
+        }
+        @media (max-width: 576px) {
+            .student-card {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Student Summary Report</h1>
+
+    <div class="container">
+        {% for summary in student_summary %}
+        <div class="student-card">
+            <h2>{{ summary.student_name }}</h2>
+            <div class="student-details">
+                <p><strong>Roll Number:</strong> {{ summary.roll_number }}</p>
+                <p><strong>Course:</strong> {{ summary.course }}</p>
+                <p><strong>Email:</strong> {{ summary.email }}</p>
+                <p><strong>Total Classes:</strong> {{ summary.total_classes }}</p>
+                <p><strong>Present:</strong> {{ summary.present_count }}</p>
+                <p><strong>Attendance Percentage:</strong> {{ summary.attendance_percentage|floatformat:2 }}%</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

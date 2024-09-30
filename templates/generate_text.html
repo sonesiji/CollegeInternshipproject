@@ -8,10 +8,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         body {
+            background-color: #f09433; /* Start of Instagram gradient */
+            background-image: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #e5e5e5;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,7 +32,7 @@
             animation: slideIn 1s ease-out;
         }
         .header {
-            background-color: #4a90e2;
+            background-color: #151517; /* Instagram blue */
             color: white;
             padding: 15px;
             display: flex;
@@ -111,16 +112,18 @@
             line-height: 1.4;
         }
         .message.bot {
-            background-color: #e1e1e1;
-            color: #333;
+            background-color: #833ab4; /* Instagram purple */
+            background-image: linear-gradient(90deg, #833ab4 0%, #5851db 50%, #405de6 100%);
+            color: white;
             align-self: flex-start;
-            border: 1px solid #d3d3d3;
+            border: none;
         }
         .message.user {
-            background-color: #4a90e2;
-            color: #ffffff;
+            background-color: #fd1d1d; /* Instagram red */
+            background-image: linear-gradient(90deg, #fd1d1d 0%, #f56040 50%, #f09433 100%);
+            color: white;
             align-self: flex-end;
-            border: 1px solid #357abd;
+            border: none;
         }
         .message .author {
             font-weight: bold;
@@ -150,7 +153,8 @@
             transition: height 0.2s;
         }
         .message-input button {
-            background-color: #4a90e2;
+            background-color: #833ab4;
+            background-image: linear-gradient(90deg, #833ab4 0%, #fd1d1d 50%, #f09433 100%);
             color: white;
             padding: 10px 15px;
             border: none;
@@ -164,7 +168,7 @@
             font-size: 1.2em;
         }
         .message-input button:hover {
-            background-color: #357abd;
+            background-color: #bc1888;
         }
         .message-input button:active {
             transform: scale(0.95);
@@ -193,16 +197,22 @@
 <body>
     <div class="chat-container">
         <div class="header">
-            <button class="back-button" onclick="goBack()">
+            <button class="back-button" onclick="window.location.href='/'">
                 <i class="fas fa-arrow-left"></i>
             </button>
             <span class="title">Chat with Christ Bot</span>
             <div></div>
+            <button class="toggle-button" onclick="toggleSidebar()">
+                <i class="fas fa-angle-left"></i>
+            </button>
         </div>
         <div class="chat-content">
             <div class="sidebar">
                 <h2>Previous Messages</h2>
                 <div id="sidebarMessages">
+                    <button class="toggle-button" onclick="toggleSidebar()">
+                        <i class="fas fa-angle-left"></i>
+                    </button>
                     <!-- Previous messages will be added here dynamically -->
                 </div>
             </div>
@@ -341,6 +351,26 @@
 
         // Initialize sidebar on page load
         updateSidebar();
+        function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    const chatbox = document.getElementById('chatbox'); // Adjust this ID to your chatbox's ID
+    const toggleButton = document.querySelector('.toggle-button i');
+
+    // Check if sidebar is currently hidden
+    if (sidebar.style.display === 'none' || sidebar.style.display === '') {
+        sidebar.style.display = 'block'; // Show sidebar
+        toggleButton.classList.remove('fa-angle-right');
+        toggleButton.classList.add('fa-angle-left');
+        chatbox.style.width = '70%'; // Adjust chatbox width
+    } else {
+        sidebar.style.display = 'none'; // Hide sidebar
+        toggleButton.classList.remove('fa-angle-left');
+        toggleButton.classList.add('fa-angle-right');
+        chatbox.style.width = '100%'; // Adjust chatbox width
+    }
+}
+
+
     </script>
 </body>
 </html>

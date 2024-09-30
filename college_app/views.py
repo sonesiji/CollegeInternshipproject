@@ -636,6 +636,77 @@ def internship_suggestion_view(request):
 
     return render(request, 'internship_form.html', {'form': form})
 
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.crypto import get_random_string
+from django.contrib import messages
+from .models import Student
+
+def password_reset_confirm(request, token):
+    student_email = request.session.get('student_email')
+    
+    if student_email:
+        if request.method == "POST":
+            form = SetNewPasswordForm(request.POST)
+            if form.is_valid():
+                new_password = form.cleaned_data['new_password']
+                
+                # Find the student using the email stored in the session
+                student = get_object_or_404(Student, email=student_email)
+
+                # Save the new password (you may want to hash it)
+                student.password = new_password  # Remember to hash the password in production
+                student.save()
+
+                # Clear the session
+                request.session['student_email'] = None
+
+                messages.success(request, "Your password has been successfully reset.")
+                return redirect('student_login')
+        else:
+            # Render the password reset form for GET request
+            form = SetNewPasswordForm()
+            return render(request, 'password_reset_confirm.html', {'form': form})
+    else:
+        messages.error(request, "Invalid or expired reset link.")
+        return redirect('passwordreset')
+
+    
+def password_reset_request(request):
+    if request.method == "POST":
+        form = PasswordResetRequestForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            try:
+                student = Student.objects.get(email=email)
+
+                # Generate a secure random token
+                token = get_random_string(length=32)
+
+                # Store the email in the session for later use
+                request.session['student_email'] = student.email
+
+                # Create the reset URL (customized URL path)
+                reset_url = request.build_absolute_uri(f"/resetpassword/{token}/")
+
+                # Prepare the email content
+                subject = "Password Reset Request"
+                message = render_to_string('password_reset_email.html', {
+                    'reset_url': reset_url,
+                })
+
+                # Send the reset link via email
+                send_mail(subject, message, 'sonesiji2020@gmail.com', [student.email])
+
+                messages.success(request, "A password reset link has been sent to your email.")
+                return redirect('student_login')
+            except Student.DoesNotExist:
+                messages.error(request, "No account found with that email.")
+    else:
+        form = PasswordResetRequestForm()
+
+    return render(request, 'password_reset_form.html', {'form': form})  
 
 
 
@@ -643,11 +714,138 @@ def internship_suggestion_view(request):
 
 
 
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from .models import Student, Attendance
+from datetime import date, timedelta
+from django import forms
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
+# Form to handle date range input
+class DateRangeForm(forms.Form):
+    start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'max': date.today()}))
+    end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'max': date.today()}))
+
+def generate_attendance_report(request):
+    students = Student.objects.all()
+    attendance_report = []
+
+    # Default dates: last 30 days
+    default_start_date = date.today() - timedelta(days=30)
+    default_end_date = date.today()
+
+    if request.method == 'POST':
+        form = DateRangeForm(request.POST)
+        if form.is_valid():
+            start_date = form.cleaned_data['start_date']
+            end_date = form.cleaned_data['end_date']
+        else:
+            start_date = default_start_date
+            end_date = default_end_date
+    else:
+        form = DateRangeForm(initial={'start_date': default_start_date, 'end_date': default_end_date})
+        start_date = default_start_date
+        end_date = default_end_date
+
+    # Calculate attendance for each student
+    for student in students:
+        attendance_records = Attendance.objects.filter(student=student, date__range=(start_date, end_date))
+        total_classes = attendance_records.count()
+        present_count = attendance_records.filter(is_present=True).count()
+        absent_count = total_classes - present_count
+
+        attendance_report.append({
+            'student_name': student.name,
+            'roll_number': student.roll_number,
+            'total_classes': total_classes,
+            'present_count': present_count,
+            'absent_count': absent_count,
+            'attendance_percentage': (present_count / total_classes) * 100 if total_classes > 0 else 0
+        })
+
+    # If 'Download PDF' button is clicked
+    if 'pdf' in request.POST:
+        return download_pdf(attendance_report, start_date, end_date)
+
+    context = {
+        'attendance_report': attendance_report,
+        'start_date': start_date,
+        'end_date': end_date,
+        'form': form
+    }
+    return render(request, 'attendance_report.html', context)
+
+# PDF generation function
+def download_pdf(attendance_report, start_date, end_date):
+    template = get_template('attendance_report_pdf.html')
+    context = {
+        'attendance_report': attendance_report,
+        'start_date': start_date,
+        'end_date': end_date
+    }
+    html = template.render(context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="attendance_report_{start_date}_to_{end_date}.pdf"'
+    
+    # Generate PDF
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    if pisa_status.err:
+        return HttpResponse('Error generating PDF', status=500)
+    return response
 
 
 
 
+from django.shortcuts import render
+from .models import Student, Attendance
+from datetime import date, timedelta
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
+def generate_student_summary_report(request):
+    students = Student.objects.all()
+    student_summary = []
 
+    for student in students:
+        total_classes = Attendance.objects.filter(student=student).count()
+        present_count = Attendance.objects.filter(student=student, is_present=True).count()
+        absent_count = total_classes - present_count
 
+        student_summary.append({
+            'student_name': student.name,
+            'roll_number': student.roll_number,
+            'course': student.course,
+            'contact': student.contact,
+            'email': student.email,
+            'total_classes': total_classes,
+            'present_count': present_count,
+            'absent_count': absent_count,
+            'attendance_percentage': (present_count / total_classes) * 100 if total_classes > 0 else 0
+        })
 
+    # If 'Download PDF' button is clicked
+    if 'pdf' in request.POST:
+        return download_summary_pdf(student_summary)
+
+    context = {
+        'student_summary': student_summary,
+    }
+    return render(request, 'student_summary_report.html', context)
+
+# PDF generation for the student summary
+def download_summary_pdf(student_summary):
+    template = get_template('student_summary_report_pdf.html')
+    context = {
+        'student_summary': student_summary
+    }
+    html = template.render(context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="student_summary_report.pdf"'
+    
+    # Generate PDF
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    if pisa_status.err:
+        return HttpResponse('Error generating PDF', status=500)
+    return response

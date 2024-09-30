@@ -218,9 +218,10 @@
         <ul class="menu-bar">
           <li class="{% if request.path == '/' %}active{% endif %}"><a href="{% url 'index' %}">Home</a></li>
           <li class="{% if request.path == '/about/' %}active{% endif %}"><a href="{% url 'about' %}">About</a></li>
-          <li><a href="#">Admission</a></li>
+          <li><a href="https://internship-prediction-model-nd4t6ywbx7svxmnntbfylj.streamlit.app/">Internsip</a></li>
+
           <!-- <li class="{% if request.path == '/generate/' %}active{% endif %}"><a href="{% url 'generate_text' %}">Chatbot</a></li> -->
-          <li class="{% if request.path == '/login/' %}active{% endif %}"><a href="{% url 'internship_suggestion' %}">Internship</a></li>
+          <li class="{% if request.path == '/login/' %}active{% endif %}"><a href="{% url 'internship_suggestion' %}">Ai-Suggestions</a></li>
           <li class="{% if request.path == '/admin_login/' %}active{% endif %}"><a href="{% url 'admin_login' %}">Admin</a></li>
           <li class="{% if request.path == '/register/' %}active{% endif %}"><a href="{% url 'register' %}">Register</a></li>
           <li class="{% if request.path == '/login/' %}active{% endif %}"><a href="{% url 'student_login' %}">Log-In</a></li>

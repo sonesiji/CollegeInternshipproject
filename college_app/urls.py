@@ -4,8 +4,9 @@ from django.contrib import admin
 from .views import  generate_text
 from .views import event_visualization
 from .views import activity_report
-from .views import internship_suggestion_view
+from .views import *
 from django.contrib.auth import views as auth_views
+from .views import generate_attendance_report
 
 
 
@@ -37,10 +38,10 @@ urlpatterns = [
     path('event-visualization/<int:student_id>/', event_visualization, name='event_visualization'),
     path('report/activity/', activity_report, name='activity_report'),
     path('internship/', internship_suggestion_view, name='internship_suggestion'),
-    path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
-    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('passwordreset/', password_reset_request, name='passwordreset'),
+    path('resetpassword/<str:token>/', password_reset_confirm, name='passwordresetconfirm'),
+    path('attendance-report/', generate_attendance_report, name='attendance_report'),
+    path('student-summary-report/', generate_student_summary_report, name='student_summary_report'),
     
 ]
     
